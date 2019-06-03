@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fix me!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <link rel="stylesheet" href="stylesheet.css">
+    <style>
+.Container {
+  position: relative;
+};
+#input1{
+  position: absolute;
+};
+#input2{
+  position: absolute;
+};
+#select1{
+  position: absolute;
+};
+    </style>
+</head>
+<body class="bg-dark pt-4">
+<div id="exercisesHolder" class="container">
+    <div class="row">
+        <div class="col-12 bg-white shadow-sm p-4 mx-auto mt-4 border container">
+            <p id="error"></p>
+           <input id="input1" type="text" class="mr-3" required></input>
+           <select id="select1">
+               <option value="plus">+</option>
+               <option value="minus">-</option>
+               <option value="multiply">*</option>
+               <option value="divide">/</option>
+           </select>
+           <input id="input2" type="text" class="mr-3" required></input>
+           <br>
+           <button class="btn btn-primary mt-2">calculate!</button> <button id="danger" class="btn btn-danger mt-2">colapse!</button>
+           <div id="result" class="border border-primary mt-2"><p>here is your result:&nbsp;<span id="span"></span></p></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+<script>
+
+ var button = document.querySelector("button");
+ var result = document.getElementById("result");
+ var input1 = document.getElementById("input1");
+ var input2 = document.getElementById("input2");
+ var error  = document.getElementById("error");
+ var select1 = document.getElementById("select1");
+ var span  = document.getElementById("span");
+
+input1.addEventListener("keyup",rand);
+input2.addEventListener("keyup",rand);
+
+console.log(button);
+button.addEventListener("click",clickbutton) ;
+
+function clickbutton(){
+    console.log('clikyy');
+    button.classList.toggle("btn-success");
+    button.innerText=("calculate...");
+
+    var icon = document.createElement('i');
+    icon.classList.add("fas", "fa-spinner","mr-2","fa-spin");
+    button.prepend(icon);
+
+
+
+    setTimeout(function(){
+        button.classList.toggle("btn-success");
+        icon.remove(); 
+        button.innerText = ("calculate");
+        if(input1.value.length ==0||input2.value.length ==0){
+            return;
+            }
+        
+        if ( isNaN(input1.value) || isNaN(input2.value) ){
+            error.innerText="please type a number...";
+            return '';
+        }
+
+        var totalResult = calculateResult(Number(input1.value),Number(input2.value));
+        span.innerText = totalResult;;
+    
+        },500);
+}
+function calculateResult (value1,value2){
+    console.log(select1);
+switch (select1.value){
+    case 'plus':
+     return value1 + value2;
+    break;
+    case 'minus':
+    if(value2>value1){
+        error.innerText="you cant substract ...";
+        return '';
+    }
+     return value1 - value2;
+    break;
+    case 'multiply':
+    if (value2 %2!=0 ){
+        error.innerText="you cant multiply by ...";
+        return '';
+    }
+     return value1 * value2;
+    break;
+    case 'divide':
+     if (value2 == 0){
+        error.innerText="you cant divide divide by 0";
+        return '';
+     }
+
+     if(!Number.isInteger(value1/value2)){
+        error.innerText="its not an integer";
+        return'';
+     }
+     return value1 / value2;
+    break;
+    default:return;
+}
+}
+console.log(rand);
+function rand(){
+    console.log(rand);
+
+if (event.target.value == 'rand'){
+event.target.value = Math.floor(Math.random()*100);
+//if (event.target.value == 'boom!'){}
+
+}
+}
+var blabla = document.getElementById("danger");
+blabla.addEventListener('click',myMove);
+function myMove() {
+  var pos = 0;
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (pos == 350) {
+      clearInterval(id);
+    } else {
+      pos++; 
+      input1.style.top = pos + 'px'; 
+      input1.style.left = pos + 'px'; 
+    }
+  }
+}
+//all = querySelector("#error","#input1","select1","#input2",".btn");
+</script>
+</body>
+</html>
+
+
+
+
