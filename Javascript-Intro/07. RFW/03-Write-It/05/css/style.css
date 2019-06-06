@@ -21,10 +21,16 @@ body {
 
 h1 {
   color: #2E86AB;
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 
-p{
-  font-size:2rem;
+p,li{
+  font-size:1rem;
   padding:.5rem 0;
+}
+
+h3 {
+  color: #2E86AB;
+  font-size: 1.5rem;
+  line-height: 3rem;
 }
